@@ -25,7 +25,11 @@ Route::get('/test', function (
         public_path('packages/woocommerce/data'),
     );
 
-    for($i = 0; $i < 10; $i++) {
+    dump(
+        "Found " . count($parsed) . " hooks."
+    );
+
+    for($i = 0; $i < 50; $i++) {
         dump($parsed[$i]);
     }
 
