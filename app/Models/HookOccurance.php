@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Scout\Searchable;
 
 class HookOccurance extends Model
 {
 
+    use Searchable;
     protected $fillable = [
         'hook_id',
         'file_path',
@@ -30,4 +32,25 @@ class HookOccurance extends Model
             'args' => 'array',
         ];
     }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'hook' => $this->hook->toSearchableArray(),
+            'file_path' => $this->file_path,
+            'line' => $this->line,
+            'args' => $this->args,
+            'surroundingCode' => $this->surroundingCode,
+            'class' => $this->class,
+            'method' => $this->method,
+            'class_phpdoc' => $this->class_phpdoc,
+        ];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'hook_occurances_index';
+    }
 }
+
