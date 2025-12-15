@@ -37,7 +37,8 @@ class HookOccurance extends Model
     {
         return [
             'id' => $this->id,
-            'hook' => $this->hook->toSearchableArray(),
+            'hook' => $this->hook->name,
+            'plugin' => $this->hook->plugin->name,
             'file_path' => $this->file_path,
             'line' => $this->line,
             'args' => $this->args,
@@ -50,7 +51,7 @@ class HookOccurance extends Model
 
     public function searchableAs(): string
     {
-        return 'hook_occurances_index';
+        return 'hook_occurance_index';
     }
 }
 

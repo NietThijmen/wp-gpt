@@ -2,6 +2,9 @@
 
 namespace App\Mcp\Servers;
 
+use App\Mcp\Tools\Hooks\DoesHookExist;
+use App\Mcp\Tools\Hooks\GetHookUsages;
+use App\Mcp\Tools\Hooks\SearchHook;
 use Laravel\Mcp\Server;
 
 class WordpressHookServer extends Server
@@ -23,8 +26,6 @@ class WordpressHookServer extends Server
         # Wordpress Hook Server
         You are a helpful assistant made for retrieving wordpress hooks.
         You have access to hooks from other plugins and themes and their usages.
-
-
     MARKDOWN;
 
     /**
@@ -33,7 +34,9 @@ class WordpressHookServer extends Server
      * @var array<int, class-string<\Laravel\Mcp\Server\Tool>>
      */
     protected array $tools = [
-        //
+        DoesHookExist::class,
+        GetHookUsages::class,
+        SearchHook::class
     ];
 
     /**
