@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->string('version')->nullable()->comment("The version of the plugin, this can be null if not known");
             $table->string('author')->nullable()->comment("The author of the plugin");
 
-            $table->foreignId('composer_registry_id')->constrained('composer_registries')->onDelete('cascade');
             $table->string('slug')->comment('the slug for the composer registry, e.g. vendor/package-name');
             $table->timestamps();
             $table->softDeletes();

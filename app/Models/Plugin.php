@@ -17,15 +17,9 @@ class Plugin extends Model
 
     protected $fillable = [
         'name',
-        'composer_registry_id',
         'description',
         'version',
         'author',
         'slug',
     ];
-
-    public function composerRegistry(): BelongsTo
-    {
-        return $this->belongsTo(ComposerRegistry::class);
-    }
 }
