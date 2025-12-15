@@ -174,7 +174,7 @@ class Composer
 
             if(is_dir($path . '/vendor')) {
                 // remove vendor directory
-                rmdir($path . '/vendor');
+                $this->rrmdir($path . '/vendor');
             }
 
             if(is_dir($path . '/data')) {
