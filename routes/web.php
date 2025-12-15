@@ -14,8 +14,8 @@ Route::get('/test', function (
     \App\Actions\ParsePlugin::execute(
         $composer,
         $hookParser,
-        'wpackagist-plugin/woocommerce',
-        'dev-trunk'
+        'roots/wordpress-no-content',
+        '6.9'
     );
 
     return view('welcome');

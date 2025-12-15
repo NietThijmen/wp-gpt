@@ -75,7 +75,10 @@ class HookParser
      */
     private function getAllFiles(
         string $basePath,
-        array  $extensions = ['php']
+        array  $extensions = ['php'],
+        array $withoutDirs = [
+            'vendor',
+        ]
     ): array
     {
         $rii = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($basePath));
@@ -86,6 +89,13 @@ class HookParser
             }
             if (in_array($file->getExtension(), $extensions)) {
                 $files[] = $file->getPathname();
+            }
+
+            // Skip files in excluded directories
+            foreach ($withoutDirs as $excludedDir) {
+                if (strpos($file->getPathname(), DIRECTORY_SEPARATOR . $excludedDir . DIRECTORY_SEPARATOR) !== false) {
+                    continue 2; // Skip to the next file
+                }
             }
         }
         return $files;

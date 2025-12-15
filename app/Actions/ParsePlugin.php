@@ -19,6 +19,12 @@ class ParsePlugin
 
     )
     {
+
+        ini_set(
+            'max_execution_time',
+            300
+        );
+
         $composer->generateInstallComposer(
             public_path('packages/' . $package_name),
             $package_name,
@@ -34,7 +40,7 @@ class ParsePlugin
 
         $actions = $hookParser->parseFiles(
             public_path(
-                "packages/{$package_name}/data/{$pluginName}"
+                "packages/{$package_name}/"
             ),
         );
 
