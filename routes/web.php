@@ -7,20 +7,30 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function (
-    \App\Services\Composer $composer
+    \App\Services\Composer $composer,
+    \App\Services\HookParser $hookParser
 ) {
 
-    $composer->generateInstallComposer(
-        public_path('packages/classic-editor'),
-        'wpackagist-plugin/classic-editor',
-        'dev-trunk'
+//    $composer->generateInstallComposer(
+//        public_path('packages/woocommerce'),
+//        'wpackagist-plugin/woocommerce',
+//        'dev-trunk'
+//    );
+//
+//    $composer->install(
+//        public_path('packages/woocommerce')
+//    );
+
+    $parsed = $hookParser->parseFiles(
+        public_path('packages/woocommerce/data'),
     );
 
-    $composer->install(
-        public_path('packages/classic-editor')
-    );
+    for($i = 0; $i < 10; $i++) {
+        dump($parsed[$i]);
+    }
 
-    return 'Composer install file generated.';
+
+
 
 
 });
