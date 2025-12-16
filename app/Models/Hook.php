@@ -17,7 +17,7 @@ class Hook extends Model
     ];
 
     protected $casts = [
-        'name' =>  'string',
+        'name' => 'string',
     ];
 
     public function toSearchableArray(): array
@@ -25,7 +25,7 @@ class Hook extends Model
         return [
             'name' => $this->name,
             'type' => $this->type,
-            'plugin' => $this->plugin->toSearchableArray() // Include related plugin data
+            'plugin' => $this->plugin->toSearchableArray(), // Include related plugin data
         ];
     }
 
@@ -33,7 +33,6 @@ class Hook extends Model
     {
         return $this->belongsTo(Plugin::class);
     }
-
 
     public function searchableAs(): string
     {

@@ -33,7 +33,7 @@ class AdministrationServer extends Server
      */
     protected array $tools = [
         SearchPackages::class,
-        IndexPackage::class
+        IndexPackage::class,
     ];
 
     /**

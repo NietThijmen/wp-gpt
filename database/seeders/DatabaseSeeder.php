@@ -35,7 +35,6 @@ class DatabaseSeeder extends Seeder
             'access_token' => null,
         ]);
 
-
         /**
          * Create a default user
          */

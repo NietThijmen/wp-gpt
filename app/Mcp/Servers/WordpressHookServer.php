@@ -36,7 +36,7 @@ class WordpressHookServer extends Server
     protected array $tools = [
         DoesHookExist::class,
         GetHookUsages::class,
-        SearchHook::class
+        SearchHook::class,
     ];
 
     /**

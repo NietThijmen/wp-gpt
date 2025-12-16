@@ -29,11 +29,11 @@ class DoesHookExist extends Tool
 
         $exists = Hook::where('name', $data['name'])->exists();
 
-        if(!$exists) {
-            return Response::error('The hook "' . $data['name'] . '" does not exist in the database.');
+        if (! $exists) {
+            return Response::error('The hook "'.$data['name'].'" does not exist in the database.');
         }
 
-        return Response::text('The hook "' . $data['name'] . '" exists in the database.');
+        return Response::text('The hook "'.$data['name'].'" exists in the database.');
     }
 
     /**

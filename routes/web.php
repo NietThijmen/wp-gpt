@@ -8,7 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/test', function (
-    \App\Services\Composer   $composer,
+    \App\Services\Composer $composer,
     \App\Services\HookParser $hookParser
 ) {
     $packages = $composer->search(
@@ -29,7 +29,6 @@ Route::get('/test', function (
 
     dd($packages);
 });
-
 
 Route::get('/search', function (Request $request) {
     return \App\Models\HookOccurance::search(

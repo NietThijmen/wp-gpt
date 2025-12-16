@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
@@ -14,7 +13,7 @@ use Laravel\Scout\Searchable;
  */
 class Plugin extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, Searchable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -35,7 +34,6 @@ class Plugin extends Model
             'slug' => $this->slug,
         ];
     }
-
 
     public function searchableAs(): string
     {

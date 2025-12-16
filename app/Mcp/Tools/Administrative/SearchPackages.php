@@ -23,27 +23,21 @@ class SearchPackages extends Tool
     public function handle(
         Request $request,
         Composer $composer
-    ): Response
-    {
+    ): Response {
         $request->validate([
             'vendor' => 'nullable|string',
             'package' => 'required|string',
             'version' => 'nullable|string',
         ]);
 
-
-
-
         $data = $composer->search(
-            $request->string('vendor', 'wpackagist-plugin') . '/' . $request->string('package'),
+            $request->string('vendor', 'wpackagist-plugin').'/'.$request->string('package'),
             $request->get('version', null)
         );
 
-
-
-        if(count($data) == 0) {
+        if (count($data) == 0) {
             return Response::error(
-                "No packages found for " . $request->string('vendor', 'wpackagist-plugin') . '/' . $request->string('package') . "."
+                'No packages found for '.$request->string('vendor', 'wpackagist-plugin').'/'.$request->string('package').'.'
             );
         }
 
@@ -86,7 +80,7 @@ class SearchPackages extends Tool
 
             'version' => $schema->string()
                 ->description('The version of the package to search for.')
-                ->nullable()
+                ->nullable(),
         ];
     }
 }

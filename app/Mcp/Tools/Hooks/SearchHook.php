@@ -2,7 +2,6 @@
 
 namespace App\Mcp\Tools\Hooks;
 
-use App\Models\Hook;
 use App\Models\HookOccurance;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Laravel\Mcp\Request;

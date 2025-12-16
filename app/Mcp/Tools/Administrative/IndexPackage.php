@@ -26,8 +26,7 @@ class IndexPackage extends Tool
         Request $request,
         Composer $composer,
         HookParser $hookParser
-    ): Response
-    {
+    ): Response {
         $request->validate([
             'vendor' => 'nullable|string',
             'package' => 'required|string',
@@ -37,18 +36,17 @@ class IndexPackage extends Tool
         $success = ParsePlugin::execute(
             $composer,
             $hookParser,
-            $request->string('vendor', 'wpackagist-plugin') . '/' . $request->string('package'),
+            $request->string('vendor', 'wpackagist-plugin').'/'.$request->string('package'),
             $request->get('version', null)
         );
 
-        if(!$success) {
+        if (! $success) {
             return Response::error(
-                "Failed to index package " . $request->string('vendor', 'wpackagist-plugin') . '/' . $request->string('package') . "."
+                'Failed to index package '.$request->string('vendor', 'wpackagist-plugin').'/'.$request->string('package').'.'
             );
         }
 
-
-        return Response::text('Successfully indexed package ' . $request->string('vendor', 'wpackagist-plugin') . '/' . $request->string('package') . '.');
+        return Response::text('Successfully indexed package '.$request->string('vendor', 'wpackagist-plugin').'/'.$request->string('package').'.');
     }
 
     /**
@@ -70,7 +68,7 @@ class IndexPackage extends Tool
 
             'version' => $schema->string()
                 ->description('The version of the package to search for.')
-                ->required()
+                ->required(),
         ];
     }
 }

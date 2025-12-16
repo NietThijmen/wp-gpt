@@ -8,8 +8,8 @@ use Laravel\Scout\Searchable;
 
 class HookOccurance extends Model
 {
-
     use Searchable;
+
     protected $fillable = [
         'hook_id',
         'file_path',
@@ -54,4 +54,3 @@ class HookOccurance extends Model
         return 'hook_occurance_index';
     }
 }
-

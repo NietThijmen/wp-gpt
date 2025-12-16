@@ -11,37 +11,34 @@ use App\Services\HookParser;
 class ParsePlugin
 {
     public static function execute(
-        Composer   $composer,
+        Composer $composer,
         HookParser $hookParser,
 
-        string     $package_name,
-        string     $package_version = 'dev-trunk',
+        string $package_name,
+        string $package_version = 'dev-trunk',
 
-    )
-    {
+    ) {
 
         ini_set(
             'max_execution_time',
             300
         );
 
-
-        if(Plugin::where('name', $package_name)->where('version', $package_version)->exists())
-        {
+        if (Plugin::where('name', $package_name)->where('version', $package_version)->exists()) {
             \Log::info("Plugin {$package_name} version {$package_version} already parsed.");
+
             return false;
         }
 
         $composer->generateInstallComposer(
-            public_path('packages/' . $package_name),
+            public_path('packages/'.$package_name),
             $package_name,
             $package_version
         );
 
         $composer->install(
-            public_path('packages/' . $package_name)
+            public_path('packages/'.$package_name)
         );
-
 
         $pluginName = explode('/', $package_name)[1];
 
@@ -50,7 +47,6 @@ class ParsePlugin
                 "packages/{$package_name}/"
             ),
         );
-
 
         \DB::transaction(function () use ($package_name, $package_version, $pluginName, $actions) {
             $plugin = Plugin::create([
@@ -78,14 +74,13 @@ class ParsePlugin
                 $hook_ids[$action['name']] = $data->id;
             }
 
-
             foreach ($actions as $filter) {
-                if (!isset($hook_ids[$filter['name']])) {
+                if (! isset($hook_ids[$filter['name']])) {
 
-                    \Log::warning("Filter without action: " . $filter['name']);
+                    \Log::warning('Filter without action: '.$filter['name']);
+
                     continue;
                 }
-
 
                 HookOccurance::create([
                     'hook_id' => $hook_ids[$filter['name']],
@@ -95,13 +90,11 @@ class ParsePlugin
                     'surroundingCode' => $filter['context']['code'],
                     'class' => $filter['context']['class'] ?? null,
                     'method' => $filter['context']['method'] ?? null,
-                    'class_phpdoc' => $filter['context']['class_phpdoc'] ?? null
+                    'class_phpdoc' => $filter['context']['class_phpdoc'] ?? null,
                 ]);
             }
         });
 
-
         return true;
     }
-
 }

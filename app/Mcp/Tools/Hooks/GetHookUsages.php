@@ -32,18 +32,16 @@ class GetHookUsages extends Tool
             return $hook->id;
         });
 
-
-
-
-        if(count($hooks) === 0) {
+        if (count($hooks) === 0) {
             return Response::error(
-                'The hook "' . $data['name'] . '" does not exist in the database.'
+                'The hook "'.$data['name'].'" does not exist in the database.'
             );
         }
 
         $usages = HookOccurance::whereIn('hook_id', $hooks)->get();
 
         $json = $usages->toJson(JSON_PRETTY_PRINT);
+
         return Response::text($json);
     }
 

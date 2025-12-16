@@ -11,12 +11,10 @@ class ComposerServiceProvider extends ServiceProvider
         $this->app->singleton(
             'composer',
             function ($app) {
-                return new \App\Services\Composer();
+                return new \App\Services\Composer;
             }
         );
     }
 
-    public function boot(): void
-    {
-    }
+    public function boot(): void {}
 }
