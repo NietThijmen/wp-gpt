@@ -15,7 +15,7 @@ class WordpressServer extends Server
     /**
      * The MCP server's name.
      */
-    protected string $name = 'Wordpress Hook Server';
+    protected string $name = 'Wordpress Database Server';
 
     /**
      * The MCP server's version.
