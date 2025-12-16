@@ -1,12 +1,13 @@
 <script lang="ts">
     // This layout is used for authentication-related pages
 
+    import { page } from '@inertiajs/svelte'
     export let title: string = "Authentication";
 </script>
 
 
 <svelte:head>
-    <title>{title} - MyApp</title>
+    <title>{title} - {$page.props.appName}</title>
 </svelte:head>
 
 <main class="min-h-screen flex flex-col justify-center items-center bg-gray-100">

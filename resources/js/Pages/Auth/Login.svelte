@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { router } from '@inertiajs/svelte'
     import AuthLayout from "@/Layouts/AuthLayout.svelte";
     import TextInput from "@/Components/Input/TextInput.svelte";
     import PrimaryButton from "@/Components/Buttons/PrimaryButton.svelte";
@@ -6,10 +7,15 @@
 
     let username = $state("");
     let password = $state("");
-
     function login() {
-        // Handle login logic here
-        console.log("Logging in with", username, password);
+        router.post(
+            "/login",
+            {
+                email: username,
+                password: password,
+            }
+        );
+
     }
 </script>
 

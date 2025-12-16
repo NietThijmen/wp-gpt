@@ -7,6 +7,10 @@ Route::get('/', function () {
     return inertia('Welcome');
 });
 
+Route::get('/home', function () {
+    return "Home Page";
+})->name('home');
+
 
 
 Route::middleware([
