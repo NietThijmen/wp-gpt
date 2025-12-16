@@ -9,25 +9,16 @@ Route::get('/', function () {
 
 Route::get('/test', function (
     \App\Services\Composer $composer,
-    \App\Services\HookParser $hookParser
+    \App\Services\HookParser $hookParser,
+    \App\Services\ClassMethodParser $classMethodParser
 ) {
-    $packages = $composer->search(
-        'wpackagist-plugin/classic-editor'
+    \App\Actions\ParsePlugin::execute(
+        $composer,
+        $hookParser,
+        $classMethodParser,
+        'wpackagist-plugin/akismet',
+        'dev-trunk'
     );
-
-    $packages = array_map(function ($item) {
-        return [
-            'name' => $item->getName(),
-            'version' => $item->getVersion(),
-            'description' => $item?->getDescription() ?? 'No description available.',
-            'release_date' => $item->getReleaseDate() ? $item->getReleaseDate()->getTimestamp() : 'Unknown',
-            'homepage' => $item->getHomepage() ?? 'N/A',
-        ];
-    }, $packages);
-
-    $packages = array_values($packages);
-
-    dd($packages);
 });
 
 Route::get('/search', function (Request $request) {

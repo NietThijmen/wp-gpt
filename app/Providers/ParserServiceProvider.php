@@ -11,6 +11,10 @@ class ParserServiceProvider extends ServiceProvider
         $this->app->singleton('hookparser', function ($app) {
             return new \App\Services\HookParser;
         });
+
+        $this->app->singleton('classMethodParser', function ($app) {
+            return new \App\Services\ClassMethodParser;
+        });
     }
 
     public function boot(): void {}
