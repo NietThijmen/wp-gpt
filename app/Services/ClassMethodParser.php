@@ -104,7 +104,9 @@ class ClassMethodParser
                                 'start_line' => $method->getStartLine(),
                                 'end_line' => $method->getEndLine(),
                                 'parameters' => array_map(function ($param) {
-                                    return $param->var->name;
+                                    $name =  $param->var->name;
+                                    $type = $param->type ? $param->type->toString() . ' ' : '';
+                                    return $type . '$' . $name;
                                 }, $method->getParams()),
                                 'phpdoc' => $method->getDocComment() ? $method->getDocComment()->getText() : null,
                             ];
