@@ -3,6 +3,7 @@
 namespace App\Mcp\Tools\Administrative;
 
 use App\Actions\ParsePlugin;
+use App\Services\ClassMethodParser;
 use App\Services\Composer;
 use App\Services\HookParser;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
@@ -25,7 +26,8 @@ class IndexPackage extends Tool
     public function handle(
         Request $request,
         Composer $composer,
-        HookParser $hookParser
+        HookParser $hookParser,
+        ClassMethodParser $classMethodParser
     ): Response {
         $request->validate([
             'vendor' => 'nullable|string',
@@ -36,6 +38,7 @@ class IndexPackage extends Tool
         $success = ParsePlugin::execute(
             $composer,
             $hookParser,
+            $classMethodParser,
             $request->string('vendor', 'wpackagist-plugin').'/'.$request->string('package'),
             $request->get('version', null)
         );

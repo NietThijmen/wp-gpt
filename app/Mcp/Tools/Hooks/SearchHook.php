@@ -29,7 +29,24 @@ class SearchHook extends Tool
         $hookQuery = $validated['query'];
         $hook_array = HookOccurance::search(
             $hookQuery
-        )->raw()['hits'];
+        )->get()->map(function (HookOccurance $item) {
+            return [
+                'id' => $item->id,
+                'hook' => $item->hook->name,
+                'args' => $item->args,
+
+
+
+                'file_path' => $item->file_path,
+                'line_number' => $item->line,
+
+                'class' => $item->class,
+                'method' => $item->method,
+                'phpdoc' => $item->class_phpdoc,
+
+                'context' => $item->surroundingCode,
+            ];
+        });
 
         return Response::text(json_encode(
             $hook_array,
