@@ -38,12 +38,12 @@ class WordpressServer extends Server
      */
     protected array $tools = [
 
-        // Hook
+        // Hook Search
         DoesHookExist::class,
         GetHookUsages::class,
         SearchHook::class,
 
-        // File
+        // File Search
         SearchFile::class,
         SearchClass::class,
         SearchMethod::class
