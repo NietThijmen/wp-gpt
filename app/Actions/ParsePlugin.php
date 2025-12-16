@@ -25,6 +25,13 @@ class ParsePlugin
             300
         );
 
+
+        if(Plugin::where('name', $package_name)->where('version', $package_version)->exists())
+        {
+            \Log::info("Plugin {$package_name} version {$package_version} already parsed.");
+            return false;
+        }
+
         $composer->generateInstallComposer(
             public_path('packages/' . $package_name),
             $package_name,
@@ -48,7 +55,6 @@ class ParsePlugin
         \DB::transaction(function () use ($package_name, $package_version, $pluginName, $actions) {
             $plugin = Plugin::create([
                 'name' => $pluginName,
-                'composer_registry_id' => 1,
                 'description' => 'A parsed plugin',
                 'version' => $package_version,
                 'author' => 'Unknown',

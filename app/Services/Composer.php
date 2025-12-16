@@ -7,6 +7,7 @@ use Composer\Config;
 use Composer\Downloader\DownloadManager;
 use Composer\Factory;
 use Composer\IO\ConsoleIO;
+use Composer\Package\BasePackage;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -19,22 +20,44 @@ class Composer
     private ConsoleIO $io;
 
 
-    private function generateAuth(): array
+    private function generateRepositories(): array
     {
         $httpBasic = [];
         foreach ($this->registries as $registry) {
-            if (!empty($registry['username']) && !empty($registry['password'])) {
-                $httpBasic[$registry['domain']] = [
-                    'username' => $registry['username'],
-                    'password' => $registry['password'],
+//            if (!empty($registry['username']) && !empty($registry['password'])) {
+//                $httpBasic[$registry['domain']] = [
+//                    'username' => $registry['username'],
+//                    'password' => $registry['password'],
+//                ];
+//            }
+//            if (!empty($registry['access_token'])) {
+//                $httpBasic[$registry['domain']] = [
+//                    'username' => $registry['access_token'],
+//                    'password' => '',
+//                ];
+//            }
+
+            $data = [];
+            $data['type'] = 'composer';
+            $data['url'] = $registry['domain'];
+
+            if(!empty($registry['username']) && !empty($registry['password'])) {
+                $data['http-basic'] = [
+                    $registry['domain'] => [
+                        'username' => $registry['username'],
+                        'password' => $registry['password'],
+                    ],
+                ];
+            } elseif(!empty($registry['access_token'])) {
+                $data['http-basic'] = [
+                    $registry['domain'] => [
+                        'username' => $registry['access_token'],
+                        'password' => '',
+                    ]
                 ];
             }
-            if (!empty($registry['access_token'])) {
-                $httpBasic[$registry['domain']] = [
-                    'username' => $registry['access_token'],
-                    'password' => '',
-                ];
-            }
+
+            $httpBasic[] = $data;
         }
         return $httpBasic;
     }
@@ -58,9 +81,9 @@ class Composer
         $repositoryManager = $composer->getRepositoryManager();
 
         foreach ($this->registries as $registry) {
-            $data = $this->generateAuth();
-            foreach ($data as $datum) {
+            $data = $this->generateRepositories();
 
+            foreach ($data as $datum) {
                 $repository = $repositoryManager->createRepository(
                     'composer',
                     $datum
@@ -89,6 +112,11 @@ class Composer
     }
 
 
+    /**
+     * @param string $query
+     * @param string|null $constraint
+     * @return BasePackage[]
+     */
     public function search(
         string $query,
         ?string $constraint = null,

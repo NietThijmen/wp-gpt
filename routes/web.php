@@ -11,14 +11,23 @@ Route::get('/test', function (
     \App\Services\Composer   $composer,
     \App\Services\HookParser $hookParser
 ) {
-    \App\Actions\ParsePlugin::execute(
-        $composer,
-        $hookParser,
-        'roots/wordpress-no-content',
-        '6.9'
+    $packages = $composer->search(
+        'wpackagist-plugin/classic-editor'
     );
 
-    return view('welcome');
+    $packages = array_map(function ($item) {
+        return [
+            'name' => $item->getName(),
+            'version' => $item->getVersion(),
+            'description' => $item?->getDescription() ?? 'No description available.',
+            'release_date' => $item->getReleaseDate() ? $item->getReleaseDate()->getTimestamp() : 'Unknown',
+            'homepage' => $item->getHomepage() ?? 'N/A',
+        ];
+    }, $packages);
+
+    $packages = array_values($packages);
+
+    dd($packages);
 });
 
 
