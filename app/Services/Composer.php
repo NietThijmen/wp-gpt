@@ -24,19 +24,6 @@ class Composer
     {
         $httpBasic = [];
         foreach ($this->registries as $registry) {
-//            if (!empty($registry['username']) && !empty($registry['password'])) {
-//                $httpBasic[$registry['domain']] = [
-//                    'username' => $registry['username'],
-//                    'password' => $registry['password'],
-//                ];
-//            }
-//            if (!empty($registry['access_token'])) {
-//                $httpBasic[$registry['domain']] = [
-//                    'username' => $registry['access_token'],
-//                    'password' => '',
-//                ];
-//            }
-
             $data = [];
             $data['type'] = 'composer';
             $data['url'] = $registry['domain'];
