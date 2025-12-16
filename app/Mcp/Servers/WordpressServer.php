@@ -2,12 +2,15 @@
 
 namespace App\Mcp\Servers;
 
+use App\Mcp\Tools\File\SearchClass;
+use App\Mcp\Tools\File\SearchFile;
+use App\Mcp\Tools\File\SearchMethod;
 use App\Mcp\Tools\Hooks\DoesHookExist;
 use App\Mcp\Tools\Hooks\GetHookUsages;
 use App\Mcp\Tools\Hooks\SearchHook;
 use Laravel\Mcp\Server;
 
-class WordpressHookServer extends Server
+class WordpressServer extends Server
 {
     /**
      * The MCP server's name.
@@ -34,9 +37,16 @@ class WordpressHookServer extends Server
      * @var array<int, class-string<\Laravel\Mcp\Server\Tool>>
      */
     protected array $tools = [
+
+        // Hook
         DoesHookExist::class,
         GetHookUsages::class,
         SearchHook::class,
+
+        // File
+        SearchFile::class,
+        SearchClass::class,
+        SearchMethod::class
     ];
 
     /**
