@@ -7,6 +7,17 @@ Route::get('/', function () {
     return inertia('Welcome');
 });
 
+
+
+Route::middleware([
+    'guest'
+])->group(function () {
+    Route::get('/login', function () {
+        return inertia('Auth/Login');
+    })->name('login.get');
+});
+
+
 Route::get('/test', function (
     \App\Services\Composer $composer,
     \App\Services\HookParser $hookParser,

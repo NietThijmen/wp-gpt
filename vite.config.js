@@ -1,10 +1,9 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import tailwindcss from '@tailwindcss/vite';
-
 import {
     svelte
 } from '@sveltejs/vite-plugin-svelte';
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
     plugins: [
@@ -20,4 +19,13 @@ export default defineConfig({
             ignored: ['**/storage/framework/views/**'],
         },
     },
+
+    resolve: {
+        alias: {
+            "@": "/resources/js",
+            "@pages": "/resources/js/Pages",
+            "@components": "/resources/js/Components",
+            "@layouts": "/resources/js/Layouts",
+        }
+    }
 });
