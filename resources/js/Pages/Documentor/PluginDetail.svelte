@@ -37,14 +37,20 @@
             const blocks = {};
             try {
                 for (const classItem of (file.classes || [])) {
-                    blocks[classItem.className + '-phpdoc'] = await codeToHtml(classItem.phpdoc || '', {lang: 'php', theme: theme});
+                    blocks[classItem.className + '-phpdoc'] = await codeToHtml(classItem.phpdoc || '', {
+                        lang: 'php',
+                        theme: theme
+                    });
 
                     for (const method of (classItem.methods || [])) {
                         const contentLines = (file.content || '').split('\n');
                         const str = contentLines.slice(method.start_line - 1, method.end_line).join('\n');
                         // await shiki conversion
                         blocks[method.name] = await codeToHtml(str, {lang: 'php', theme: theme});
-                        blocks[method.name + '-phpdoc'] = await codeToHtml(method.phpdoc || '', {lang: 'php', theme: theme});
+                        blocks[method.name + '-phpdoc'] = await codeToHtml(method.phpdoc || '', {
+                            lang: 'php',
+                            theme: theme
+                        });
                     }
                 }
 
@@ -69,13 +75,23 @@
         if (!searchQuery) {
             return files;
         }
-        return files.filter(file => file.path.toLowerCase().includes(searchQuery.toLowerCase()));
+
+
+        // modify the files filter to search for file.classes in addition to file.path
+        return files.filter(file => {
+            const pathMatch = file.path.toLowerCase().includes(searchQuery.toLowerCase());
+            const classMatch = (file.classes || []).some(classItem =>
+                classItem.className.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+            return pathMatch || classMatch;
+        });
     });
 
 </script>
 
-<AppLayout>
-    <!--    create a sidebar, where we show all the file names-->
+<AppLayout
+    title="Documentation - {plugin.name}"
+>
     <div class="flex h-full">
         <aside class="w-1/4 border-r p-4 overflow-y-auto">
             <h2 class="text-xl font-bold mb-4">Files</h2>
@@ -92,7 +108,12 @@
                     <li class="mb-2">
                         <button onclick={() => {
                             selectedFile = file;
-                        }} class="text-blue-600 hover:underline text-left ">{file.path}</button>
+                        }} class="text-blue-600 hover:underline text-left ">{
+                            file.path
+                        }
+
+                            {#if selectedFile && selectedFile.path === file.path} (Selected){/if}
+                        </button>
                     </li>
                 {/each}
             </ul>
@@ -116,7 +137,6 @@
                                     </pre>
 
 
-                                <!--Show the code of the file here based on method.start_line and method.end_line-->
                                 <div class="mt-2">
                                     <h5 class="font-semibold mb-1">Code:</h5>
                                     <pre class="bg-gray-50 p-3 rounded overflow-x-auto">
@@ -132,5 +152,4 @@
             {/if}
         </main>
     </div>
-
 </AppLayout>
