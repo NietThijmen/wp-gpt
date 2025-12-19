@@ -8,8 +8,12 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    return "Home Page";
+    return inertia('Chat');
 })->name('home');
+
+Route::get('/hook-search', function () {
+    return inertia('Search/Hooks');
+})->name('hook-search.index');
 
 
 
@@ -36,10 +40,7 @@ Route::get('/test', function (
     );
 });
 
-Route::get('/search', function (Request $request) {
-    return \App\Models\HookOccurance::search(
-        $request->get('s')
-    )->get()->map(function ($hook) {
-        return $hook->toArray();
-    });
+Route::prefix('/search')->group(function () {
+    Route::get('/hooks', [\App\Http\Controllers\Search\HookSearchController::class, 'index'])->name('search.hooks');
+    Route::get('/hook/{hook}', [\App\Http\Controllers\Search\HookSearchController::class, 'inspect'])->name('search.hook.inspect');
 });

@@ -19,7 +19,8 @@
         "laravel/scout": "^10.22",
         "laravel/tinker": "^2.10.1",
         "meilisearch/meilisearch-php": "^1.16",
-        "spatie/laravel-google-fonts": "^1.4"
+        "spatie/laravel-google-fonts": "^1.4",
+        "tightenco/ziggy": "^2.6"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.16",

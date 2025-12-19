@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Laravel\Scout\Searchable;
 
 class Hook extends Model
@@ -32,6 +33,12 @@ class Hook extends Model
     public function plugin(): BelongsTo
     {
         return $this->belongsTo(Plugin::class);
+    }
+
+    public function occurrences(): HasMany
+    {
+        return $this->hasMany(HookOccurance::class);
+
     }
 
     public function searchableAs(): string

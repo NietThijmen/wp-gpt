@@ -16,6 +16,7 @@
         className = "",
 
         onInput = () => {},
+        onDebouncedInput = () => {},
     }: {
         label?: string;
         centeredLabel?: boolean;
@@ -30,7 +31,17 @@
         disabled?: boolean;
         className?: string;
         onInput?: (event: Event) => void;
+        onDebouncedInput?: (event: Event) => void;
     } = $props();
+
+
+    const debounce = (func: Function, wait: number) => {
+        let timeout: ReturnType<typeof setTimeout>;
+        return (...args: any[]) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func(...args), wait);
+        };
+    };
 </script>
 
 
@@ -57,6 +68,15 @@
         {autocomplete}
         {autofocus}
         {disabled}
-        oninput={(event) => onInput(event)}
+        oninput={(e) => {
+            if(onDebouncedInput) {
+                debounce(() => onDebouncedInput(e), 300)();
+            }
+
+            if(onInput) {
+                onInput(e);
+            }
+
+        }}
     />
 </div>
