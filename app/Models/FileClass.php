@@ -21,7 +21,12 @@ class FileClass extends Model
 
     public function pluginFile(): BelongsTo
     {
-        return $this->belongsTo(Plugin::class, 'plugin_file_id');
+        return $this->belongsTo(PluginFile::class, 'plugin_file_id');
+    }
+
+    public function plugin(): BelongsTo
+    {
+        return $this->pluginFile->belongsTo(Plugin::class, 'plugin_id');
     }
 
     public function methods(): HasMany
