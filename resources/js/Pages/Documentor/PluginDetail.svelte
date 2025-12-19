@@ -108,9 +108,14 @@
                     <li class="mb-2">
                         <button onclick={() => {
                             selectedFile = file;
-                        }} class="text-blue-600 hover:underline text-left ">{
-                            file.path
-                        }
+                        }} class="text-blue-600 hover:underline text-left ">
+                            {#each file.classes as classItem}
+                                <div class="text-gray-500">{classItem.className}</div>
+                            {/each}
+
+                            <span class="text-sm">
+                                {file.path}
+                            </span>
 
                             {#if selectedFile && selectedFile.path === file.path} (Selected){/if}
                         </button>
