@@ -20,8 +20,8 @@ A MCP for your IDE which can search through WordPress hooks from the core and ev
 
 ## TODO
 - [ ] Implement a user-friendly chatGPT style interface for asking questions from the browser.
-- [ ] Add a "documentation" like view for each hook with examples and usage.
-- [ ] Add support for fully indexing classes, methods, and functions in addition to hooks. (e.g. `WP_Query::get_posts()`, `wp_enqueue_script()`, etc.)
+- [x] Add a "documentation" like view for each hook with examples and usage.
+- [x] Add support for fully indexing classes, methods, and functions in addition to hooks. (e.g. `WP_Query::get_posts()`, `wp_enqueue_script()`, etc.)
 - [ ] Add a global search to the frontend for searching through hooks without needing an IDE.
 - [ ] Create a cool landing page for the project.
 - [ ] Create a cool logo for the project.
