@@ -7,17 +7,22 @@ Route::get('/', function () {
     return inertia('Welcome');
 });
 
-Route::get('/home', function () {
-    return inertia('Chat');
-})->name('home');
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/hook-search', function () {
-    return inertia('Search/Hooks');
-})->name('hook-search.index');
+    Route::get('/home', function () {
+        return inertia('Chat');
+    })->name('home');
 
-Route::get('/class-search', function () {
-    return inertia('Search/Classes');
-})->name('class-search.index');
+    Route::get('/hook-search', function () {
+        return inertia('Search/Hooks');
+    })->name('hook-search.index');
+
+    Route::get('/class-search', function () {
+        return inertia('Search/Classes');
+    })->name('class-search.index');
+
+    Route::resource('/documentation', \App\Http\Controllers\PluginDocumentorController::class);
+});
 
 
 
@@ -26,7 +31,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/login', function () {
         return inertia('Auth/Login');
-    })->name('login.get');
+    })->name('login');
 });
 
 
@@ -43,6 +48,7 @@ Route::get('/test', function (
         'dev-trunk'
     );
 });
+
 
 Route::prefix('/search')->group(function () {
     Route::get('/hooks', [\App\Http\Controllers\Search\HookSearchController::class, 'index'])->name('search.hooks');
