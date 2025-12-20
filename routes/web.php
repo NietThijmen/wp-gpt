@@ -9,7 +9,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/home', function () {
+    Route::get('/home', function (\App\Services\OpenRouter $openRouter) {
         return inertia('Chat');
     })->name('home');
 
@@ -22,6 +22,11 @@ Route::middleware(['auth'])->group(function () {
     })->name('class-search.index');
 
     Route::resource('/documentation', \App\Http\Controllers\PluginDocumentorController::class);
+});
+
+
+Route::middleware(['auth'])->prefix('/chat')->group(function () {
+    Route::get('/explain-class/{fileClass}', [\App\Http\Controllers\Ai\ClassExplainer::class, 'explain'])->name('chat.explain-class');
 });
 
 
