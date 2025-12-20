@@ -18,13 +18,7 @@ class OpenRouter
     private string $cachePrefix = '';
     private int $cacheTtlMinutes = 1;
 
-    private McpClient $mcpClient;
-
-    /**
-     * @param McpClient $mcpClient the MCP client to call MCP servers, this is given by DI
-     */
     public function __construct(
-        McpClient $mcpClient
     )
     {
         $this->apiKey = config('services.openrouter.key');
@@ -32,8 +26,6 @@ class OpenRouter
         $this->apiBaseUrl = config('services.openrouter.base_url', 'https://openrouter.ai/api/v1/chat/completions');
         $this->cachePrefix = config('services.openrouter.cache.prefix', 'openrouter_');
         $this->cacheTtlMinutes = config('services.openrouter.cache.ttl_minutes', 1);
-
-        $this->mcpClient = $mcpClient;
     }
 
     private function getBaseRequest(): \Illuminate\Http\Client\PendingRequest
@@ -51,7 +43,6 @@ class OpenRouter
 
     /**
      * @param array $messages The messages to send to the model
-     * @param bool $useTools
      * @param bool $enableThoughts
      * @param bool $stream
      * @param int|null $maxTokens
@@ -63,8 +54,6 @@ class OpenRouter
      */
     public function sendMessage(
         array $messages,
-
-        bool $useTools = false,
         bool $enableThoughts = false,
         bool $stream = false,
         ?int $maxTokens = null,
@@ -85,12 +74,6 @@ class OpenRouter
             'messages' => $messages,
             'stream' => $stream,
         ];
-
-        if($useTools) {
-            $tools = $this->mcpClient->generateToolsArray();
-            $data['tools'] = $tools;
-            $data['tool_choice'] = 'auto';
-        }
 
         $data['reasoning'] = [];
         if($enableThoughts) {
