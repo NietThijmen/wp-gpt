@@ -52,19 +52,6 @@ Route::middleware([
 });
 
 
-Route::get('/test', function (
-    \App\Services\Composer $composer,
-    \App\Services\HookParser $hookParser,
-    \App\Services\ClassMethodParser $classMethodParser
-) {
-    \App\Actions\ParsePlugin::execute(
-        $composer,
-        $hookParser,
-        $classMethodParser,
-        'wpackagist-plugin/akismet',
-        'dev-trunk'
-    );
-});
 
 
 Route::prefix('/search')->group(function () {
