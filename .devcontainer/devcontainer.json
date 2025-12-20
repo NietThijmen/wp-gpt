@@ -1,0 +1,49 @@
+{
+	"name": "Laravel WP-GPT",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "20"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bmewburn.vscode-intelephense-client",
+				"MrChetan.phpcs",
+				"xdebug.php-debug",
+				"bradlc.vscode-tailwindcss",
+				"dbaeumer.vscode-eslint",
+				"svelte.svelte-vscode",
+				"amiralizadeh9480.laravel-extra-intellisense"
+			],
+			"settings": {
+				"php.validate.executablePath": "/usr/local/bin/php",
+				"terminal.integrated.defaultProfile.linux": "bash"
+			}
+		}
+	},
+	"forwardPorts": [
+		8000,
+		5173,
+		7700
+	],
+	"portsAttributes": {
+		"8000": {
+			"label": "Laravel",
+			"onAutoForward": "notify"
+		},
+		"5173": {
+			"label": "Vite",
+			"onAutoForward": "silent"
+		},
+		"7700": {
+			"label": "Meilisearch",
+			"onAutoForward": "silent"
+		}
+	},
+	"postCreateCommand": "bash .devcontainer/post-create.sh",
+	"remoteUser": "vscode"
+}

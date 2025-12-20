@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    network_mode: service:meilisearch
+    environment:
+      - DB_CONNECTION=sqlite
+      - MEILISEARCH_HOST=http://localhost:7700
+      - MEILISEARCH_KEY=masterKey
+      - SCOUT_DRIVER=meilisearch
+      - VITE_HOST=0.0.0.0
+      - VITE_PORT=5173
+    depends_on:
+      - meilisearch
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.11
+    ports:
+      - "7700:7700"
+      - "8000:8000"
+      - "5173:5173"
+    environment:
+      - MEILI_MASTER_KEY=masterKey
+      - MEILI_NO_ANALYTICS=true
+      - MEILI_ENV=development
+    volumes:
+      - meilisearch-data:/meili_data
+
+volumes:
+  meilisearch-data:
