@@ -13,7 +13,6 @@
         <div class="text-center">
             <!-- Main Heading -->
             <h1 class="text-5xl font-bold tracking-tight text-foreground sm:text-6xl md:text-7xl">
-                <span class="block">WP Hook GPT</span>
                 <span class="mt-2 block bg-gradient-to-r from-accent-foreground to-tertiary bg-clip-text text-transparent">
                     WordPress at Your Fingertips
                 </span>
@@ -21,7 +20,7 @@
 
             <!-- Subtitle -->
             <p class="mx-auto mt-6 max-w-2xl text-lg text-foreground-alt sm:text-xl">
-                A powerful MCP for your IDE that enables lightning-fast searches through WordPress hooks 
+                A powerful MCP for your IDE that enables lightning-fast searches through WordPress hooks
                 from the core and plugins. Built with MeiliSearch for instant results.
             </p>
 
@@ -30,8 +29,8 @@
                 <PrimaryButton onClick={() => router.visit('/login')}>
                     Get Started
                 </PrimaryButton>
-                <a 
-                    href="https://github.com/NietThijmen/wp-gpt" 
+                <a
+                    href="https://github.com/NietThijmen/wp-gpt"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="inline-flex h-12 items-center justify-center rounded-input border border-border-input px-6 text-[15px] font-semibold shadow-mini transition-all hover:border-border-input-hover hover:bg-muted active:scale-[0.98]"
@@ -181,9 +180,16 @@
         <!-- Footer -->
         <div class="mt-16 border-t border-border-card pt-8 text-center text-sm text-foreground-alt">
             <p>
-                Built with ❤️ for the WordPress community. 
-                <a href="https://github.com/NietThijmen/wp-gpt" target="_blank" rel="noopener noreferrer" class="link">
+                Built with ❤️ for the WordPress community.
+                <a href="https://github.com/NietThijmen/wp-gpt" target="_blank" class="link">
                     Contribute on GitHub
+                </a>
+            </p>
+
+            <p>
+                Support ongoing development by
+                <a href="https://www.buymeacoffee.com/nietthijmen" target="_blank" class="link">
+                    ☕buying me a coffee!
                 </a>
             </p>
         </div>
