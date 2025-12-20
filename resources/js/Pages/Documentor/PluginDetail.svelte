@@ -149,6 +149,7 @@
     title="Documentation - {plugin.name}"
 >
     <div class="flex h-full">
+        <!--Sidebar-->
         <aside class="w-1/4 border-r p-4 overflow-y-auto">
             <h2 class="text-xl font-bold mb-4">Files</h2>
             <TextInput
@@ -180,6 +181,7 @@
             </ul>
         </aside>
 
+        <!--Main content-->
         <main class="w-3/4 p-4 overflow-y-auto">
             {#if selectedFile}
                 {#each selectedFile.classes as classItem}
@@ -222,6 +224,7 @@
     </div>
 
 
+    <!--AI Modal-->
     <Modal
         isOpen={aiQuestionState.state !== 'idle'}
         onClose={() => { aiQuestionState = { 'state': 'idle' }; }}
