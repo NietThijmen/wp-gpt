@@ -89,6 +89,7 @@
 
 
     <Modal
+        size="medium"
         isOpen={details !== null}
         onClose={() => {
             details = null;
