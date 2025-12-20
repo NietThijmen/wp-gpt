@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class OpenRouter
 {
@@ -10,6 +13,10 @@ class OpenRouter
     private string $apiBaseUrl;
     private string $apiKey;
     private string $model;
+
+
+    private string $cachePrefix = '';
+    private int $cacheTtlMinutes = 1;
 
     private McpClient $mcpClient;
 
@@ -23,6 +30,8 @@ class OpenRouter
         $this->apiKey = config('services.openrouter.key');
         $this->model = config('services.openrouter.model', 'gpt-4o-mini');
         $this->apiBaseUrl = config('services.openrouter.base_url', 'https://openrouter.ai/api/v1/chat/completions');
+        $this->cachePrefix = config('services.openrouter.cache.prefix', 'openrouter_');
+        $this->cacheTtlMinutes = config('services.openrouter.cache.ttl_minutes', 1);
 
         $this->mcpClient = $mcpClient;
     }
@@ -42,8 +51,15 @@ class OpenRouter
 
     /**
      * @param array $messages The messages to send to the model
+     * @param bool $useTools
+     * @param bool $enableThoughts
+     * @param bool $stream
+     * @param int|null $maxTokens
+     * @param string|null $cacheKey
      * @return array|mixed The response from the model
-     * @throws \Illuminate\Http\Client\ConnectionException if the request fails (openrouter has an uptime of ~99.9%, so this should be rare)
+     * @throws ConnectionException if the request fails (openrouter has an uptime of ~99.9%, so this should be rare)
+     * @throws ContainerExceptionInterface if there is an error retrieving from the cache or storing to the cache
+     * @throws NotFoundExceptionInterface if the cache key is not found
      */
     public function sendMessage(
         array $messages,
@@ -57,7 +73,7 @@ class OpenRouter
     {
 
         if($cacheKey) {
-            if($cached = cache()->get($cacheKey)) {
+            if($cached = cache()->get($this->cachePrefix . $cacheKey)) {
                 return $cached;
             }
         }
@@ -92,7 +108,7 @@ class OpenRouter
         $data =  $response->json();
 
         if($cacheKey) {
-            cache()->put($cacheKey, $data, 10 * 60); // cache for 10 minutes
+            cache()->put($this->cachePrefix . $cacheKey, $data, $this->cacheTtlMinutes * 60);
         }
 
         return $data;

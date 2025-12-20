@@ -38,6 +38,10 @@ return [
     'openrouter' => [
         'key' => env('OPENROUTER_KEY'),
         'base_url' => env('OPENROUTER_BASE_URL', 'https://openrouter.ai/api/v1'),
-        'model' => env('OPENROUTER_MODEL', 'gpt-4o-mini')
+        'model' => env('OPENROUTER_MODEL', 'gpt-4o-mini'),
+        'cache' => [
+            'prefix' => env('OPENROUTER_CACHE_PREFIX', 'openrouter_'),
+            'ttl_minutes' => env('OPENROUTER_CACHE_TTL_MINUTES', 60),
+        ]
     ]
 ];
