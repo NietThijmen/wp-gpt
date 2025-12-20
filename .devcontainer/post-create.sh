@@ -55,12 +55,18 @@ fi
 
 # Run migrations
 echo "Running migrations..."
-php artisan migrate --force --ansi || true
+if php artisan migrate --force --ansi; then
+    echo "✅ Migrations completed successfully"
+else
+    echo "⚠️  Warning: Migrations failed or skipped. This might be expected on first run."
+fi
 
 # Set proper permissions
 echo "Setting permissions..."
 chmod -R 775 storage bootstrap/cache
-chmod 664 database/database.sqlite || true
+if [ -f database/database.sqlite ]; then
+    chmod 664 database/database.sqlite
+fi
 
 echo "✅ Development environment setup complete!"
 echo ""
