@@ -5,7 +5,13 @@
     } from '@inertiajs/svelte';
     import TextInput from "../../Components/Input/TextInput.svelte";
     import {codeToHtml} from "shiki";
+    import Modal from "../../Components/Modal/Modal.svelte";
+    import PrimaryButton from "../../Components/Buttons/PrimaryButton.svelte";
 
+    import { route } from '../../../../vendor/tightenco/ziggy';
+    import { Ziggy } from '../../ziggy.js';
+    import { marked } from 'marked';
+    import Scrollable from "../../Components/Scrollable/Scrollable.svelte";
 
     const plugin = $page.props.plugin;
     const files = $page.props.files;
@@ -87,6 +93,56 @@
         });
     });
 
+
+
+    let aiQuestionState = $state({
+        'state': 'idle'
+    });
+
+    async function askAboutClass(classId: string) {
+        console.info("Asking AI about class", classId);
+        aiQuestionState.state = 'loading';
+
+        const url = route(
+            'chat.explain-class',
+            {
+                fileClass: classId
+            },
+            undefined,
+            Ziggy
+        )
+
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.info("AI response received", data);
+            let rawMessage = data.explanation.choices[0].message.content;
+            let html = marked.parse(rawMessage);
+
+            aiQuestionState = {
+                'state': 'answered',
+                'answer': html
+            };
+        } catch (error) {
+            console.error("Error asking AI about class", error);
+            aiQuestionState = {
+                'state': 'answered',
+                'answer': 'An error occurred while fetching the AI response.'
+            };
+        }
+
+    }
+
 </script>
 
 <AppLayout
@@ -128,7 +184,14 @@
             {#if selectedFile}
                 {#each selectedFile.classes as classItem}
                     <div class="mb-6">
-                        <h2 class="text-xl font-semibold mb-2">Class: {classItem.className}</h2>
+                        <h2 class="text-xl font-semibold mb-2">Class: {classItem.className}
+
+                            <PrimaryButton class="ml-4 px-2 py-1 text-sm" onClick={() => {
+                                askAboutClass(classItem.id);
+                            }}>
+                                Ask AI about this class
+                            </PrimaryButton>
+                        </h2>
                         <pre class="bg-gray-50 p-4 rounded overflow-x-auto">
                                 {@html methodCodeBlocks[classItem.className + '-phpdoc'] || ''}
                         </pre>
@@ -157,4 +220,38 @@
             {/if}
         </main>
     </div>
+
+
+    <Modal
+        isOpen={aiQuestionState.state !== 'idle'}
+        onClose={() => { aiQuestionState = { 'state': 'idle' }; }}
+        size="large"
+    >
+        {#snippet title()}
+            AI Class Information
+        {/snippet}
+
+        {#snippet content()}
+            {#if aiQuestionState.state === 'loading'}
+                <p>Loading...</p>
+            {:else if aiQuestionState.state === 'answered'}
+                <Scrollable
+                    type="hover"
+                    viewportClasses="max-h-96 p-4"
+                >
+                    {@html aiQuestionState.answer}
+                </Scrollable>
+            {/if}
+        {/snippet}
+        {#snippet buttons()}
+            <PrimaryButton
+                onClick={() => { aiQuestionState = { 'state': 'idle' }; }}
+            >
+                Close
+            </PrimaryButton>
+        {/snippet}
+    </Modal>
+
+
+
 </AppLayout>

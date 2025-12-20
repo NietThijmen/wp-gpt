@@ -52,8 +52,16 @@ class OpenRouter
         bool $enableThoughts = false,
         bool $stream = false,
         ?int $maxTokens = null,
+        ?string $cacheKey = null,
     )
     {
+
+        if($cacheKey) {
+            if($cached = cache()->get($cacheKey)) {
+                return $cached;
+            }
+        }
+
         $baseRequest = $this->getBaseRequest();
 
         $data = [
@@ -81,7 +89,13 @@ class OpenRouter
 
         $response = $baseRequest->post('/api/v1/chat/completions', $data);
 
-        return $response->json();
+        $data =  $response->json();
+
+        if($cacheKey) {
+            cache()->put($cacheKey, $data, 10 * 60); // cache for 10 minutes
+        }
+
+        return $data;
 
     }
 
