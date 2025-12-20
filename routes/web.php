@@ -9,9 +9,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/home', function (\App\Services\OpenRouter $openRouter) {
-        return inertia('Chat');
-    })->name('home');
+    Route::get('/home', function () {
+        return redirect()->route('documentation.index');
+    });
 
     Route::get('/hook-search', function () {
         return inertia('Search/Hooks');
@@ -22,6 +22,15 @@ Route::middleware(['auth'])->group(function () {
     })->name('class-search.index');
 
     Route::resource('/documentation', \App\Http\Controllers\PluginDocumentorController::class);
+    Route::resource('/chat', \App\Http\Controllers\ChatController::class)->names([
+        'index' => 'chat.index',
+        'create' => 'chat.create',
+        'store' => 'chat.store',
+        'show' => 'chat.show',
+        'edit' => 'chat.edit',
+        'update' => 'chat.update',
+        'destroy' => 'chat.destroy',
+    ]);
 });
 
 
