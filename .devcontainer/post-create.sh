@@ -11,20 +11,23 @@ if [ ! -f .env ]; then
     echo "Creating .env file..."
     cp .env.example .env
     
-    # Update environment variables for devcontainer
-    sed -i 's|MEILISEARCH_HOST=.*|MEILISEARCH_HOST=http://localhost:7700|g' .env
-    sed -i 's|MEILISEARCH_KEY=.*|MEILISEARCH_KEY=masterKey|g' .env
-    sed -i 's|SCOUT_DRIVER=.*|SCOUT_DRIVER=meilisearch|g' .env
-    
-    # Add Scout and Meilisearch config if not present
-    if ! grep -q "SCOUT_DRIVER" .env; then
-        echo "" >> .env
+    # Configure Meilisearch settings for devcontainer
+    # Check if variables exist and update them, otherwise append
+    if grep -q "^SCOUT_DRIVER=" .env; then
+        sed -i 's|^SCOUT_DRIVER=.*|SCOUT_DRIVER=meilisearch|' .env
+    else
         echo "SCOUT_DRIVER=meilisearch" >> .env
     fi
-    if ! grep -q "MEILISEARCH_HOST" .env; then
+    
+    if grep -q "^MEILISEARCH_HOST=" .env; then
+        sed -i 's|^MEILISEARCH_HOST=.*|MEILISEARCH_HOST=http://localhost:7700|' .env
+    else
         echo "MEILISEARCH_HOST=http://localhost:7700" >> .env
     fi
-    if ! grep -q "MEILISEARCH_KEY" .env; then
+    
+    if grep -q "^MEILISEARCH_KEY=" .env; then
+        sed -i 's|^MEILISEARCH_KEY=.*|MEILISEARCH_KEY=masterKey|' .env
+    else
         echo "MEILISEARCH_KEY=masterKey" >> .env
     fi
 fi
