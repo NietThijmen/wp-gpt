@@ -3,7 +3,6 @@
     import {Link, page} from '@inertiajs/svelte'
 
     const links = [
-        {name: 'Chat', href: '/home'},
         {name: "Hooks", href: "/hook-search"},
         {name: "Classes", href: "/class-search"},
         {name: "Documentor", href: "/documentation"},
