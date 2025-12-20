@@ -54,7 +54,6 @@ MARKDOWN;
             ]],
 
             enableThoughts: false,
-            useTools: false,
             maxTokens: 1000,
             cacheKey: "class_explainer_" . $fileClass->id . "_" . $fileClass->className
         );
