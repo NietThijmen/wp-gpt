@@ -13,6 +13,7 @@ class ChatMessage extends Model
         'role',
         'message',
         'cost',
+        'provider',
     ];
 
     public function chat(): BelongsTo

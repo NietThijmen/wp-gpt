@@ -13,6 +13,7 @@
         autocomplete = "",
         autofocus = false,
         disabled = false,
+        wrapperClassName = "",
         className = "",
 
         onInput = () => {},
@@ -29,6 +30,7 @@
         autocomplete?: string;
         autofocus?: boolean;
         disabled?: boolean;
+        wrapperClassName?: string;
         className?: string;
         onInput?: (event: Event) => void;
         onDebouncedInput?: (event: Event) => void;
@@ -45,7 +47,7 @@
 </script>
 
 
-<div class="mb-4">
+<div class="mb-4 {wrapperClassName}">
     {#if label}
         <Label.Root
             id="{name}-label"

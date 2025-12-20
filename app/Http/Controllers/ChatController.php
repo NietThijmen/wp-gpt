@@ -34,6 +34,18 @@ class ChatController extends Controller
 
     public function show(Chat $chat)
     {
+
+        $data = [
+            'id' => $chat->id,
+            'title' => $chat->title,
+            'messages' => $chat->messages()->orderBy('created_at')->get(),
+        ];
+
+        $chats = Chat::where('user_id', auth()->id())->get();
+        return inertia('Chat', [
+            'chats' => $chats,
+            'chat' => $data
+        ]);
     }
 
     public function edit(Chat $chat)

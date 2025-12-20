@@ -31,6 +31,9 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'chat.update',
         'destroy' => 'chat.destroy',
     ]);
+
+    Route::get('/chat/{chat}/messages', [\App\Http\Controllers\ChatMessageController::class, 'index'])->name('chat.messages.index');
+    Route::post('/chat/{chat}/messages', [\App\Http\Controllers\ChatMessageController::class, 'store'])->name('chat.messages.store');
 });
 
 

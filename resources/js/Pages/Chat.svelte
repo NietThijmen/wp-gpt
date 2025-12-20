@@ -1,7 +1,7 @@
 <script>
     import AppLayout from "../Layouts/AppLayout.svelte";
     import {
-        Form,
+        Form, Link,
         page, router
     } from "@inertiajs/svelte";
     import TextInput from "../Components/Input/TextInput.svelte";
@@ -10,9 +10,6 @@
 
     import { route } from '../../../vendor/tightenco/ziggy';
     import { Ziggy } from '../ziggy.js';
-
-
-    const conversations = $page.props.chats;
 
 
 
@@ -41,19 +38,19 @@
 
                 {#each $page.props.chats as conversation}
                     <li class="mb-2">
-                        <button onclick={() => {
-
-                        }} class="text-blue-600 hover:underline text-left ">
+                        <Link
+                            href={route("chat.show", { chat: conversation.id}, undefined, Ziggy)}
+                            class="text-blue-600 hover:underline text-left ">
 
 
                             <span class="text-sm">
                                 {conversation.title}
                             </span>
-                        </button>
+                        </Link>
                     </li>
                 {/each}
 
-                {#if conversations.length === 0}
+                {#if $page.props.chats.length === 0}
                     <li class="text-blue-400">No conversations found.</li>
                 {/if}
             </ul>
@@ -62,8 +59,49 @@
 
         <!--Main content-->
         <main class="w-3/4 p-4 overflow-y-auto">
-            <h1 class="text-2xl font-bold mb-4">Welcome to the Chat Page</h1>
-            <p>Select a conversation from the sidebar to view details.</p>
+            {#if !$page.props.chat}
+                <h1 class="text-2xl font-bold mb-4">Welcome to the Chat Page</h1>
+                <p>Select a conversation from the sidebar to view details.</p>
+            {:else}
+                <div class="flex flex-col h-full">
+                    <h1 class="text-2xl font-bold mb-4">Conversation: {$page.props.chat.title}</h1>
+                    <div class="space-y-4 flex-1 overflow-y-auto">
+                        {#each $page.props.chat.messages as message}
+                            <div class="p-4 border rounded">
+                                <p class="font-semibold">{message.role}:</p>
+                                <p>{message.message}</p>
+                                <span class="text-xs text-gray-500">{new Date(message.created_at).toLocaleString()}</span>
+                            </div>
+                        {/each}
+                    </div>
+
+                    <Form
+                        action={
+                            route("chat.messages.store", { chat: $page.props.chat.id }, undefined, Ziggy)
+                        }
+                        method="post"
+                        class="mt-4 flex"
+                        options={{
+                            preserveScroll: true,
+                            preserveState: true,
+                            preserveUrl: true,
+                            replace: true,
+                            only: ['chat']
+                        }}>
+                        <TextInput
+                            name="message"
+                            label="Your Message"
+                            className="flex-1 mr-2 w-full"
+                            wrapperClassName="w-full"
+                            required={true}
+                        />
+
+                        <PrimaryButton type="submit">
+                            Send
+                        </PrimaryButton>
+                    </Form>
+                </div>
+            {/if}
         </main>
     </div>
 
