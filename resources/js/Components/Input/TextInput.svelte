@@ -1,6 +1,10 @@
 <script lang="ts">
     import { Label } from "bits-ui";
 
+    import {
+        page
+    } from "@inertiajs/svelte";
+
     let {
         label = "",
         centeredLabel = false,
@@ -81,4 +85,15 @@
 
         }}
     />
+
+    {#if $page.props.errors && $page.props.errors[name]}
+        <Label.Root
+            id="{name}-error"
+            class="text-sm text-red-600 mt-1 block"
+        >
+            {
+                $page.props.errors[name]
+            }
+        </Label.Root>
+    {/if}
 </div>

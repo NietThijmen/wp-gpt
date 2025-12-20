@@ -54,6 +54,33 @@ Route::middleware([
 
 
 
+
+Route::prefix('/account')->name('account.')->group(function () {
+    Route::resource('/profile', \App\Http\Controllers\Profile\ProfileController::class)
+        ->only(['index', 'update', 'destroy'])
+        ->names([
+            'index' => 'profile.index',
+            'update' => 'profile.update',
+            'destroy' => 'profile.destroy',
+        ]);
+
+    Route::resource('/password', \App\Http\Controllers\Profile\PasswordController::class)
+        ->only(['update', 'index'])
+        ->names([
+            'index' => 'password.index',
+            'update' => 'password.update',
+        ]);
+
+
+    Route::resource('/two_factor', \App\Http\Controllers\Profile\TwoFactorController::class)
+        ->only(['index', 'store', 'destroy'])
+        ->names([
+            'index' => 'two-factor.index',
+            'store' => 'two-factor.store',
+            'destroy' => 'two-factor.destroy',
+        ]);
+});
+
 Route::prefix('/search')->group(function () {
     Route::get('/hooks', [\App\Http\Controllers\Search\HookSearchController::class, 'index'])->name('search.hooks');
     Route::get('/hook/{hook}', [\App\Http\Controllers\Search\HookSearchController::class, 'inspect'])->name('search.hook.inspect');
