@@ -17,11 +17,17 @@
         label = null,
         name = "pin-input",
         length = 6,
+        wrapperClassName = "",
+        PinWrapperClassName = "",
+        PinClassName = "",
         onComplete = () => {}
     }: {
         label?: string | null;
         name?: string;
         length?: number;
+        wrapperClassName?: string;
+        PinWrapperClassName?: string;
+        PinClassName?: string;
         onComplete?: (value: number) => void;
     } = $props();
 
@@ -30,7 +36,7 @@
     }
 </script>
 
-<div class="mb-4">
+<div class="mb-4 {wrapperClassName}">
     {#if label}
         <Label.Root
             id="{name}-label"
@@ -55,13 +61,13 @@
 
     <PinInput.Root
         bind:value
-        class="group/pininput text-foreground has-disabled:opacity-30 flex items-center"
+        class="group/pininput text-foreground has-disabled:opacity-30 flex items-center {PinWrapperClassName}"
         maxlength={6}
         {onCompleteInternal}
         pattern={REGEXP_ONLY_DIGITS}
     >
         {#snippet children({ cells })}
-            <div class="flex">
+            <div class="flex {PinClassName}">
                 {#each cells.slice(0, 3) as cell, i (i)}
                     {@render Cell(cell)}
                 {/each}

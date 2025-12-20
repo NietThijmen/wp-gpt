@@ -49,6 +49,12 @@ Route::middleware([
     Route::get('/login', function () {
         return inertia('Auth/Login');
     })->name('login');
+
+    Route::get('/two-factor', function (Request $request) {
+        return inertia('Auth/TwoFactor', [
+            'status' => session('status'),
+        ]);
+    })->name('two-factor.login');
 });
 
 
