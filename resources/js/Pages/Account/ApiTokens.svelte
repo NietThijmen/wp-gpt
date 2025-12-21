@@ -14,6 +14,7 @@
 
 
     let isCreateModalOpen = $state(false)
+    let createdToken = $state(null);
 </script>
 
 <Layout
@@ -77,7 +78,7 @@
                 method="post"
                 action={route('account.api-tokens.store', {}, undefined, Ziggy)}
                 class="space-y-4"
-                onSuccess={() => isCreateModalOpen = false}
+                onSuccess={() => {isCreateModalOpen = false; createdToken = $page.props.token;}}
             >
                 <TextInput
                     name="name"
@@ -108,5 +109,33 @@
     </Modal>
 
 
+    <Modal
+        isOpen={createdToken !== null}
+        onClose={() => {
+            createdToken = null;
+        }}
+        size="medium"
+    >
+        {#snippet title()}
+            <h2 class="text-lg font-semibold">API Token Created</h2>
+        {/snippet}
+
+        {#snippet content()}
+            <p class="mb-4">Please copy your new API token. For your security, it won't be shown again.</p>
+            <div class="bg-gray-100 p-4 rounded">
+                <code class="break-all font-mono">{createdToken}</code>
+            </div>
+        {/snippet}
+
+        {#snippet buttons()}
+            <PrimaryButton
+                onClick={() => {
+                    createdToken = null;
+                }}
+            >
+                Close
+            </PrimaryButton>
+        {/snippet}
+    </Modal>
 
 </Layout>

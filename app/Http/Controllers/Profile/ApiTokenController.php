@@ -42,7 +42,18 @@ class ApiTokenController extends Controller
             $data['abilities'] ?? ['*']
         );
 
-        return redirect()->back()->with('success', 'API token created successfully.')->with('token', $token->plainTextToken);
+        return inertia('Account/ApiTokens', [
+            'tokens'  => $user->tokens->map(function ($token) {
+                return [
+                    'id' => $token->id,
+                    'name' => $token->name,
+                    'abilities' => $token->abilities,
+                    'last_used_at' => $token->last_used_at,
+                    'created_at' => $token->created_at,
+                ];
+            }),
+            'token' => $token->plainTextToken,
+        ]);
 
     }
 

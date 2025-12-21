@@ -17,4 +17,4 @@ Mcp::web(
 Mcp::web(
     '/mcp/administration',
     \App\Mcp\Servers\AdministrationServer::class
-);
+)->middleware('auth:sanctum');
