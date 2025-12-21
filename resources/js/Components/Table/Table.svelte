@@ -5,14 +5,16 @@
         headers = [] as string[],
         rawData = [] as Object[],
         rowSnippet = (row: Object) => null as Snippet,
+        className = "",
     }: {
+        className: string
         headers?: string[],
         rawData?: Object[],
         rowSnippet?: (row: Object) => Snippet,
     } = $props();
 </script>
 
-<table class="min-w-full divide-y divide-gray-200">
+<table class="min-w-full divide-y divide-gray-200 {className}">
     <thead class="bg-gray-50">
         <tr>
             {#each headers as header}

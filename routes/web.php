@@ -24,6 +24,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/documentation', \App\Http\Controllers\PluginDocumentorController::class);
 
 
+
+    Route::resource('/users', \App\Http\Controllers\UserController::class)
+        ->only(['index', 'create', 'store', 'destroy'])
+        ->names([
+            'index' => 'users.index',
+            'create' => 'users.create',
+            'store' => 'users.store',
+            'destroy' => 'users.destroy',
+        ]);
+
     Route::prefix('/account')->name('account.')->group(function () {
         Route::resource('/profile', \App\Http\Controllers\Profile\ProfileController::class)
             ->only(['index', 'update', 'destroy'])
