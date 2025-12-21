@@ -7,6 +7,7 @@
         {name: "Classes", href: "/class-search"},
         {name: "Documentor", href: "/documentation"},
         {name: "Users", href: "/users"},
+        {name: "Registries", href: "/registries"},
         {name: "Account", href: "/account/profile"},
     ]
 </script>

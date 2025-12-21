@@ -34,6 +34,15 @@ Route::middleware(['auth'])->group(function () {
             'destroy' => 'users.destroy',
         ]);
 
+    Route::resource('/registries', \App\Http\Controllers\ComposerRegistryController::class)
+        ->only(['index', 'create', 'store', 'destroy'])
+        ->names([
+            'index' => 'composer-registries.index',
+            'create' => 'composer-registries.create',
+            'store' => 'composer-registries.store',
+            'destroy' => 'composer-registries.destroy',
+        ]);
+
     Route::prefix('/account')->name('account.')->group(function () {
         Route::resource('/profile', \App\Http\Controllers\Profile\ProfileController::class)
             ->only(['index', 'update', 'destroy'])
