@@ -85,6 +85,14 @@ Route::prefix('/account')->name('account.')->group(function () {
             'store' => 'two-factor.store',
             'destroy' => 'two-factor.destroy',
         ]);
+
+    Route::resource('/api_tokens', \App\Http\Controllers\Profile\ApiTokenController::class)
+        ->only(['index', 'store', 'destroy'])
+        ->names([
+            'index' => 'api-tokens.index',
+            'store' => 'api-tokens.store',
+            'destroy' => 'api-tokens.destroy',
+        ]);
 });
 
 Route::prefix('/search')->group(function () {

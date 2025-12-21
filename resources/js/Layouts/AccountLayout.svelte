@@ -9,6 +9,7 @@
         { name: 'Profile', href: '/account/profile' },
         { name: 'Password', href: '/account/password' },
         { name: 'Two Factor', href: '/account/two_factor' },
+        { name: 'API Tokens', href: '/account/api_tokens' },
     ]
 </script>
 
