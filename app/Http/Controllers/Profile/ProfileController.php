@@ -24,7 +24,7 @@ class ProfileController extends Controller
         $profile->update($data);
 
 
-        return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
+        return redirect()->route('account.profile.index')->with('success', 'Profile updated successfully.');
     }
 
     public function destroy(User $profile)
