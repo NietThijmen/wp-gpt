@@ -2,11 +2,15 @@
     import Layout from '@/Layouts/AppLayout.svelte'
 
     import {
-        Form,
+        Form, Link,
         page
     } from '@inertiajs/svelte';
     import Table from "../../Components/Table/Table.svelte";
     import PrimaryButton from "../../Components/Buttons/PrimaryButton.svelte";
+
+
+    import { route } from '../../../../vendor/tightenco/ziggy';
+    import { Ziggy } from '../../ziggy.js';
 </script>
 
 <Layout
@@ -14,7 +18,18 @@
 >
     <div class="container mx-auto p-4">
         <h1 class="text-2xl font-bold mb-4">Users</h1>
-        <p>This is the Users index page.</p>
+
+        <Link
+            href={route('users.create', {}, undefined, Ziggy)}
+            class="inline-block mb-4"
+        >
+            <PrimaryButton>
+                Create New User
+            </PrimaryButton>
+        </Link>
+
+
+
         <br/>
         <Table
         className="w-auto"

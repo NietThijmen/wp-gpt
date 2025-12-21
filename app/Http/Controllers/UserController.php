@@ -41,7 +41,7 @@ class UserController extends Controller
             'password' => \Hash::make($data['password']),
         ]);
 
-        return redirect()->route('users.show', $user);
+        return redirect()->route('users.index', $user);
     }
 
     public function destroy(User $user)
