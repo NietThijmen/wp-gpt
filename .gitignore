@@ -28,3 +28,6 @@ public/packages
 # Meilisearch
 data.ms
 
+# Ziggy
+resources/js/ziggy.js
+resources/js/ziggy.d.ts
