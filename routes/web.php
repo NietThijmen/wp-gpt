@@ -22,6 +22,41 @@ Route::middleware(['auth'])->group(function () {
     })->name('class-search.index');
 
     Route::resource('/documentation', \App\Http\Controllers\PluginDocumentorController::class);
+
+
+    Route::prefix('/account')->name('account.')->group(function () {
+        Route::resource('/profile', \App\Http\Controllers\Profile\ProfileController::class)
+            ->only(['index', 'update', 'destroy'])
+            ->names([
+                'index' => 'profile.index',
+                'update' => 'profile.update',
+                'destroy' => 'profile.destroy',
+            ]);
+
+        Route::resource('/password', \App\Http\Controllers\Profile\PasswordController::class)
+            ->only(['update', 'index'])
+            ->names([
+                'index' => 'password.index',
+                'update' => 'password.update',
+            ]);
+
+
+        Route::resource('/two_factor', \App\Http\Controllers\Profile\TwoFactorController::class)
+            ->only(['index', 'store', 'destroy'])
+            ->names([
+                'index' => 'two-factor.index',
+                'store' => 'two-factor.store',
+                'destroy' => 'two-factor.destroy',
+            ]);
+
+        Route::resource('/api_tokens', \App\Http\Controllers\Profile\ApiTokenController::class)
+            ->only(['index', 'store', 'destroy'])
+            ->names([
+                'index' => 'api-tokens.index',
+                'store' => 'api-tokens.store',
+                'destroy' => 'api-tokens.destroy',
+            ]);
+    });
 });
 
 
@@ -46,42 +81,6 @@ Route::middleware([
 });
 
 
-
-
-
-Route::prefix('/account')->name('account.')->group(function () {
-    Route::resource('/profile', \App\Http\Controllers\Profile\ProfileController::class)
-        ->only(['index', 'update', 'destroy'])
-        ->names([
-            'index' => 'profile.index',
-            'update' => 'profile.update',
-            'destroy' => 'profile.destroy',
-        ]);
-
-    Route::resource('/password', \App\Http\Controllers\Profile\PasswordController::class)
-        ->only(['update', 'index'])
-        ->names([
-            'index' => 'password.index',
-            'update' => 'password.update',
-        ]);
-
-
-    Route::resource('/two_factor', \App\Http\Controllers\Profile\TwoFactorController::class)
-        ->only(['index', 'store', 'destroy'])
-        ->names([
-            'index' => 'two-factor.index',
-            'store' => 'two-factor.store',
-            'destroy' => 'two-factor.destroy',
-        ]);
-
-    Route::resource('/api_tokens', \App\Http\Controllers\Profile\ApiTokenController::class)
-        ->only(['index', 'store', 'destroy'])
-        ->names([
-            'index' => 'api-tokens.index',
-            'store' => 'api-tokens.store',
-            'destroy' => 'api-tokens.destroy',
-        ]);
-});
 
 Route::prefix('/search')->group(function () {
     Route::get('/hooks', [\App\Http\Controllers\Search\HookSearchController::class, 'index'])->name('search.hooks');
