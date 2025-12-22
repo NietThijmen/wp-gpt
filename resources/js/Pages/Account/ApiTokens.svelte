@@ -11,6 +11,7 @@
     import Table from "../../Components/Table/Table.svelte";
     import Modal from "../../Components/Modal/Modal.svelte";
     import TextInput from "../../Components/Input/TextInput.svelte";
+    import {toast} from "svelte-sonner";
 
 
     let isCreateModalOpen = $state(false)
@@ -49,6 +50,10 @@
                             api_token: $page.props.user.id,
                          }, undefined, Ziggy)
                     }
+
+                    onSuccess={() => {
+                        toast.success("API Token deleted successfully!");
+                    }}
                 >
                     <input type="hidden" name="token_id" value={data.id} />
 
@@ -78,7 +83,7 @@
                 method="post"
                 action={route('account.api-tokens.store', {}, undefined, Ziggy)}
                 class="space-y-4"
-                onSuccess={() => {isCreateModalOpen = false; createdToken = $page.props.token;}}
+                onSuccess={() => {isCreateModalOpen = false; createdToken = $page.props.token; toast.success("API Token created successfully!");}}
             >
                 <TextInput
                     name="name"

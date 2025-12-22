@@ -11,6 +11,7 @@
 
     import { route } from '../../../../vendor/tightenco/ziggy';
     import { Ziggy } from '../../ziggy.js';
+    import {toast} from "svelte-sonner";
 </script>
 
 <Layout
@@ -53,6 +54,9 @@
                 <Form
                     method="delete"
                     action={`/users/${data.id}`}
+                    onSuccess={() => {
+                        toast.success("User deleted successfully!");
+                    }}
                 >
                     <PrimaryButton
                         type="submit"

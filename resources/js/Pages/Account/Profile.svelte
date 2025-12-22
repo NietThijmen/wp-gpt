@@ -10,6 +10,7 @@
     import TextInput from "../../Components/Input/TextInput.svelte";
     import PrimaryButton from "../../Components/Buttons/PrimaryButton.svelte";
     import AccountLayout from "../../Layouts/AccountLayout.svelte";
+    import {toast} from "svelte-sonner";
 
     const updateProfileRoute = route('account.profile.update', {
         profile: $page.props.user.id
@@ -33,6 +34,14 @@
                 <Form
                     method="put"
                     action="{updateProfileRoute}"
+                    onSuccess={() => {
+                        toast.success("Profile updated successfully!");
+                    }}
+
+                    onError={() => {
+                        toast.error("Failed to update profile. Please check the errors and try again.");
+                    }}
+
                     class="mt-4 space-y-4">
                     <TextInput
                         name="name"

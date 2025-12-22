@@ -10,6 +10,7 @@
     import { Ziggy } from '../../ziggy.js';
     import axios from "axios";
     import PrimaryButton from "../../Components/Buttons/PrimaryButton.svelte";
+    import {toast} from "svelte-sonner";
 
 
     let {
@@ -65,9 +66,9 @@
                 version: version,
             }
         ).then(() => {
-            console.info("Plugin indexed successfully");
+            toast.success("Plugin indexed successfully!");
         }).catch(() => {
-            console.error("Failed to index plugin");
+            toast.error("Failed to index plugin.");
         })
     }
 

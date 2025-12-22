@@ -1,6 +1,7 @@
 <script lang="ts">
     import { page } from '@inertiajs/svelte'
     import Navigation from "../Components/Navigation/Navigation.svelte";
+    import { Toaster } from 'svelte-sonner'
     export let title: string = "App";
 </script>
 
@@ -14,4 +15,7 @@
     <div class=" mx-auto">
         <slot />
     </div>
+    <Toaster position="bottom-right" />
+
+
 </main>

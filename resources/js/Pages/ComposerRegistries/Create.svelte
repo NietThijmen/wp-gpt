@@ -6,6 +6,7 @@
     import { Ziggy } from '../../ziggy.js';
     import TextInput from "../../Components/Input/TextInput.svelte";
     import PrimaryButton from "../../Components/Buttons/PrimaryButton.svelte";
+    import {toast} from "svelte-sonner";
 </script>
 
 
@@ -19,6 +20,9 @@
         <Form
             method="post"
             action={route('composer-registries.store', {}, undefined, Ziggy)}
+            onSuccess={() => {
+                toast.success("Registry created successfully!");
+            }}
             class="space-y-4">
 
             <TextInput

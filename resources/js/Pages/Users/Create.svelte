@@ -9,6 +9,7 @@
 
     import { route } from '../../../../vendor/tightenco/ziggy';
     import { Ziggy } from '../../ziggy.js';
+    import {toast} from "svelte-sonner";
 </script>
 
 <Layout
@@ -21,6 +22,9 @@
         <Form
             method="post"
             action={route('users.store', {}, undefined, Ziggy)}
+            onSuccess={() => {
+                toast.success("User created successfully!");
+            }}
             class="space-y-4"
         >
 

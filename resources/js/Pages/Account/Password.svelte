@@ -9,6 +9,7 @@
 
     import { route } from '../../../../vendor/tightenco/ziggy';
     import { Ziggy } from '../../ziggy.js';
+    import {toast} from "svelte-sonner";
 
     const updatePasswordRoute = route('account.password.update', {
         password: $page.props.user.id
@@ -26,6 +27,13 @@
         <Form
             method="put"
             action={updatePasswordRoute}
+            onSuccess={() => {
+                toast.success("Password updated successfully!");
+            }}
+
+            onError={() => {
+                toast.error("Failed to update password. Please check the errors and try again.");
+            }}
             class="mt-4 space-y-4">
             <div>
                 <TextInput

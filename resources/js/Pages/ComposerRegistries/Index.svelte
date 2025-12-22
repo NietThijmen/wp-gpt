@@ -11,6 +11,7 @@
     import { Ziggy } from '../../ziggy.js';
     import Table from "../../Components/Table/Table.svelte";
     import PrimaryButton from "../../Components/Buttons/PrimaryButton.svelte";
+    import {toast} from "svelte-sonner";
 </script>
 
 <Layout
@@ -54,6 +55,9 @@
                         action={route('composer-registries.destroy', {
                             registry: data.id
                         }, undefined, Ziggy)}
+                        onSuccess={() => {
+                            toast.success("Registry deleted successfully!");
+                        }}
                     >
                         <input type="hidden" name="_method" value="delete" />
                         <PrimaryButton
