@@ -31,3 +31,6 @@ data.ms
 # Ziggy
 resources/js/ziggy.js
 resources/js/ziggy.d.ts
+
+# SSR
+bootstrap/ssr

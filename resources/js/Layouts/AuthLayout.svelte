@@ -8,6 +8,14 @@
 
 <svelte:head>
     <title>{title} - {$page.props.appName}</title>
+
+    <meta name="description" content="A powerful MCP for your IDE that enables lightning-fast searches through WordPress hooks from the core and plugins. Built with MeiliSearch for instant results." />
+    <meta name="keywords" content="WordPress, MCP, IDE, Hook Search, MeiliSearch, Plugin Development, WordPress Development" />
+    <meta name="author" content="NietThijmen" />
+
+    <meta property="og:title" content="{title} - WordPress Hook Search & MCP" />
+    <meta property="og:description" content="A powerful MCP for your IDE that enables lightning-fast searches through WordPress hooks from the core and plugins. Built with MeiliSearch for instant results." />
+    <meta property="og:type" content="website" />
 </svelte:head>
 
 <main class="min-h-screen flex flex-col justify-center items-center bg-gray-100">

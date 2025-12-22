@@ -9,6 +9,7 @@ export default defineConfig({
         svelte(),
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
+            ssr: 'resources/js/ssr.js',
             refresh: true,
         }),
         tailwindcss(),
