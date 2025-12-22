@@ -76,6 +76,7 @@
 <Modal
     isOpen={isOpen}
     onClose={() => isOpen = false}
+    size="medium"
     >
     {#snippet title()}
         <h2 class="text-lg font-medium text-gray-900">
