@@ -15,7 +15,7 @@
 </script>
 
 <Layout
-    name="Composer Registries"
+    title="Composer Registries"
 >
 
     <div class="container mx-auto p-4">
