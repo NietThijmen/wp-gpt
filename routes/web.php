@@ -23,7 +23,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/documentation', \App\Http\Controllers\PluginDocumentorController::class);
 
-
+    Route::get('/plugin-index', [\App\Http\Controllers\PluginIndexController::class, 'index'])->name('plugin.index');
+    Route::post('/plugin-index', [\App\Http\Controllers\PluginIndexController::class, 'store'])->name('plugin.store');
 
     Route::resource('/users', \App\Http\Controllers\UserController::class)
         ->only(['index', 'create', 'store', 'destroy'])
