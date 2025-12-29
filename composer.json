@@ -20,6 +20,7 @@
         "laravel/scout": "^10.22",
         "laravel/tinker": "^2.10.1",
         "meilisearch/meilisearch-php": "^1.16",
+        "prism-php/prism": "^0.99.5",
         "spatie/laravel-google-fonts": "^1.4",
         "tightenco/ziggy": "^2.6"
     },
