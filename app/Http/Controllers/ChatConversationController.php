@@ -38,7 +38,7 @@ class ChatConversationController extends Controller
     {
         $conversations = ChatConversation::with('messages')->with('user')->get();
 
-        return inertia('chat/index', [
+        return inertia('Chat/Index', [
             'conversations' => $conversations,
         ]);
     }
@@ -56,7 +56,7 @@ class ChatConversationController extends Controller
     {
         $conversations = ChatConversation::with('messages')->with('user')->get();
         $conversation = ChatConversation::with('messages')->with('user')->where('id', $chat->id)->first();
-        return inertia('chat/index', [
+        return inertia('Chat/Index', [
             'conversations' => $conversations,
             'conversation' => $conversation, // Pass the specific conversation to the view
         ]);
