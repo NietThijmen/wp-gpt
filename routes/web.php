@@ -23,6 +23,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/documentation', \App\Http\Controllers\PluginDocumentorController::class);
 
+    Route::resource('/chat', \App\Http\Controllers\ChatConversationController::class)
+        ->only(['index', 'store', 'show', 'update'])
+        ->names([
+            'index' => 'chat.index',
+            'store' => 'chat.store',
+            'show' => 'chat.show',
+            'update' =>  'chat.update',
+        ]);
+
     Route::get('/plugin-index', [\App\Http\Controllers\PluginIndexController::class, 'index'])->name('plugin.index');
     Route::post('/plugin-index', [\App\Http\Controllers\PluginIndexController::class, 'store'])->name('plugin.store');
 
