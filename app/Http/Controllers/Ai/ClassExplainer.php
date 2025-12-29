@@ -6,17 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\FileClass;
 use App\Services\OpenRouter;
 use Illuminate\Http\Request;
+use Prism\Prism\Prism;
 
 class ClassExplainer extends Controller
 {
     public function explain(
         Request $request,
-        OpenRouter $openRouter,
         FileClass $fileClass,
     )
     {
-
-
         ini_set('max_execution_time', 0); // No time limit
 
         $dataAsMarkdown = "# Class: {$fileClass->className}\n\n";
@@ -37,34 +35,19 @@ class ClassExplainer extends Controller
         Explain in detail what this class does, its purpose, and how it might be used in
         a WordPress plugin. Provide examples where relevant.
 
-MARKDOWN;
+        MARKDOWN;
+
 
         $prompt = str_replace('{{data}}', $dataAsMarkdown, $prompt);
 
-
-        $response = $openRouter->sendMessage(
-            messages: [
-            [
-                'role' => 'system',
-                'content' => 'You are a helpful assistant that explains PHP classes for WordPress plugins.',
-            ],
-            [
-                'role' => 'user',
-                'content' => $prompt,
-            ]],
-
-            enableThoughts: false,
-            maxTokens: 1000,
-            cacheKey: "class_explainer_" . $fileClass->id . "_" . $fileClass->className
-        );
+        $response = \Prism\Prism\Facades\Prism::text()
+            ->using(config('services.ai.provider'), config('services.ai.model'))
+            ->withSystemPrompt($prompt)
+            ->withPrompt("Provide a detailed explanation of the class above.")
+            ->asText();
 
         return response()->json([
             'explanation' => $response,
         ]);
-
-
-//        return response()->json([
-//            'explanation' => $explanation,
-//        ]);
     }
 }

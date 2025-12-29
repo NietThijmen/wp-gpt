@@ -126,7 +126,7 @@
 
             const data = await response.json();
             console.info("AI response received", data);
-            let rawMessage = data.explanation.choices[0].message.content;
+            let rawMessage = data.explanation.text || 'No explanation provided by AI.';
             let html = marked.parse(rawMessage);
 
             aiQuestionState = {
