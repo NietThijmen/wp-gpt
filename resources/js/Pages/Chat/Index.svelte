@@ -43,7 +43,7 @@
 
                     <Form
                         method="POST"
-                        href={route('chat.store', undefined, undefined, Ziggy)}
+                        action={route('chat.store', {}, undefined, Ziggy)}
                         >
                         <button
                             class="text-blue-500"
