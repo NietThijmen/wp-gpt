@@ -5,6 +5,7 @@
     let open = false
 
     const links = [
+        {name: "Chat", href: "/chat"},
         { name: "Hooks", href: "/hook-search" },
         { name: "Classes", href: "/class-search" },
         { name: "Documentor", href: "/documentation" },
