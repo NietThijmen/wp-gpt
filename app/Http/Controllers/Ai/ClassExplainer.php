@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Ai;
 
 use App\Http\Controllers\Controller;
 use App\Models\FileClass;
-use App\Services\OpenRouter;
 use Illuminate\Http\Request;
 use Prism\Prism\Prism;
 
