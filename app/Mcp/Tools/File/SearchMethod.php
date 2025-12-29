@@ -28,6 +28,12 @@ class SearchMethod extends Tool
             'offset' => 'required|integer|min:0',
         ]);
 
+        \Log::info(
+            'SearchMethod Tool called with method: '.$data['method'].
+            ', limit: '.$data['limit'].
+            ', offset: '.$data['offset']
+        );
+
         $data = ClassMethod::search(
             $data['method'],
         )->get()

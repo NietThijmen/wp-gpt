@@ -31,6 +31,14 @@ class SearchFile extends Tool
             'offset' => 'nullable|integer|min:0',
         ]);
 
+        \Log::info(
+            'SearchFile Tool called with path: '.($data['path'] ?? 'N/A').
+            ', raw_content: '.(isset($data['raw_content']) ? substr($data['raw_content'], 0, 30).'...' : 'N/A').
+            ', plugin: '.($data['plugin'] ?? 'N/A').
+            ', limit: '.($data['limit'] ?? 10).
+            ', offset: '.($data['offset'] ?? 0)
+        );
+
         // Build the search query
         $query = \App\Models\PluginFile::search(
             $data['content'] ?? $data['path'] ?? ''

@@ -28,6 +28,10 @@ class GetHookUsages extends Tool
             'name' => 'required|string',
         ]);
 
+        \Log::info(
+            'GetHookUsages Tool called with name: '.$data['name']
+        );
+
         $hooks = Hook::where('name', $data['name'])->get()->map(function (Hook $hook) {
             return $hook->id;
         });
