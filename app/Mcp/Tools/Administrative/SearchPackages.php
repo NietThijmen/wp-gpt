@@ -30,6 +30,12 @@ class SearchPackages extends Tool
             'version' => 'nullable|string',
         ]);
 
+        \Log::info(
+            'SearchPackages Tool called with vendor: '.$request->string('vendor', 'wpackagist-plugin').
+            ', package: '.$request->string('package').
+            ', version: '.$request->get('version', 'latest')
+        );
+
         $data = $composer->search(
             $request->string('vendor', 'wpackagist-plugin').'/'.$request->string('package'),
             $request->get('version', null)

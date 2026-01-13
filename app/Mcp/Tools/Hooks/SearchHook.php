@@ -26,6 +26,10 @@ class SearchHook extends Tool
             'query' => 'required|string',
         ]);
 
+        \Log::info(
+            'SearchHook Tool called with query: '.$validated['query']
+        );
+
         $hookQuery = $validated['query'];
         $hook_array = HookOccurance::search(
             $hookQuery

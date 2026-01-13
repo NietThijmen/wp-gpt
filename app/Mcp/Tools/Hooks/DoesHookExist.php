@@ -27,6 +27,10 @@ class DoesHookExist extends Tool
             'name' => 'required|string',
         ]);
 
+        \Log::info(
+            'DoesHookExist Tool called with name: '.$data['name']
+        );
+
         $exists = Hook::where('name', $data['name'])->exists();
 
         if (! $exists) {

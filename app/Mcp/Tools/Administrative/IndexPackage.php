@@ -35,6 +35,12 @@ class IndexPackage extends Tool
             'version' => 'nullable|string',
         ]);
 
+        \Log::info(
+            'IndexPackage Tool called with vendor: '.$request->string('vendor', 'wpackagist-plugin').
+            ', package: '.$request->string('package').
+            ', version: '.$request->get('version', 'latest')
+        );
+
         $success = ParsePlugin::execute(
             $composer,
             $hookParser,

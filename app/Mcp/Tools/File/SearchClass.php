@@ -28,6 +28,12 @@ class SearchClass extends Tool
             'offset' => 'nullable|integer|min:0',
         ]);
 
+        \Log::info(
+            'SearchClass Tool called with class_name: '.$data['class_name'].
+            ', limit: '.($data['limit'] ?? 10).
+            ', offset: '.($data['offset'] ?? 0)
+        );
+
         // Build the search query
         $query = \App\Models\FileClass::search(
             $data['class_name']
