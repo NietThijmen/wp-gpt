@@ -7,6 +7,7 @@ use Composer\Factory;
 use Composer\IO\ConsoleIO;
 use Composer\Package\BasePackage;
 use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -57,6 +58,9 @@ class Composer
         $input = new ArrayInput([]);
         $output = new ConsoleOutput;
         $helper = new HelperSet;
+
+        $helper->set(new QuestionHelper()); // Add QuestionHelper to the HelperSet
+
         $io = new ConsoleIO($input, $output, $helper);
 
         $this->io = $io;
