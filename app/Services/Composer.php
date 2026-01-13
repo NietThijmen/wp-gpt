@@ -4,12 +4,9 @@ namespace App\Services;
 
 use App\Models\ComposerRegistry;
 use Composer\Factory;
-use Composer\IO\ConsoleIO;
+use Composer\IO\IOInterface;
+use Composer\IO\NullIO;
 use Composer\Package\BasePackage;
-use Symfony\Component\Console\Helper\HelperSet;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
 
 class Composer
 {
@@ -17,7 +14,7 @@ class Composer
 
     private \Composer\Composer $composer;
 
-    private ConsoleIO $io;
+    private IOInterface $io;
 
     private function generateRepositories(): array
     {
@@ -55,14 +52,8 @@ class Composer
             $this->registries[] = $composerRegistry->toArray();
         });
 
-        $input = new ArrayInput([]);
-        $output = new ConsoleOutput;
-        $helper = new HelperSet;
-
-        $helper->set(new QuestionHelper()); // Add QuestionHelper to the HelperSet
-
-        $io = new ConsoleIO($input, $output, $helper);
-
+        // Use a non-interactive IO suitable for web apps (no console prompts)
+        $io = new NullIO();
         $this->io = $io;
 
         $composer = Factory::create($io, [], false);
